@@ -1,6 +1,7 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, Fragment } from 'react';
 import './App.css';
-import DragAndDrop from './DragAndDrop'
+import UploadArea from './UploadArea';
+import File from './File';
 import reducer from './reducer';
 
 const App = () => {
@@ -11,15 +12,11 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>React drag and drop component</h1>
-      <DragAndDrop data={data} dispatch={dispatch} />
-      <ol className="dropped-files">
-        { data.fileList && data.fileList.length > 0 && data.fileList.map(f => {
-          return (
-            <li key={f.name}>{f.name}</li>
-          )
-        })}
-      </ol>
+      <h1>File manager</h1>
+      <UploadArea data={data} dispatch={dispatch} />
+      <Fragment>
+        { data.fileList && data.fileList.length > 0 && data.fileList.map(f => f && <File key={f.lastModified} fileName={f.name} uploadDate={f.uploadedAt} />)}
+      </Fragment>
     </div>
   );
 }

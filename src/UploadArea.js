@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DragAndDrop = props => {
+const UploadArea = props => {
 
   const { data, dispatch } = props;
 
@@ -30,15 +30,22 @@ const DragAndDrop = props => {
   const handleDrop = e => {
     e.preventDefault();
     e.stopPropagation();
-
-    let files = [...e.dataTransfer.files];
+    const files = [...e.dataTransfer.files];
 
     if (files && files.length > 0) {
-      const existingFiles = data.fileList.map(f => f.name)
-      files = files.filter(f => !existingFiles.includes(f.name))
-      let fileNames = files.map(f => f.name);
-      if(files.length > 0) {
-        dispatch({ type: 'ADD_FILE_TO_LIST', files });
+      // Time stamp and check for existing files or updated version
+      let newFiles = files.map(f => {
+        f.uploadedAt = Date.now();
+        return f;
+      })
+
+      newFiles = newFiles.filter(f => {
+        const i = data.fileList.findIndex(ef => ef.name === f.name);
+        return i < 0 || data.fileList[i].uploadedAt < f.uploadedAt
+      });
+      if(newFiles.length > 0) {
+        const fileNames = newFiles.map(f => f.name);
+        dispatch({ type: 'ADD_FILE_TO_LIST', files: newFiles });
         console.log(`Added file: ${fileNames}`);
       }
       e.dataTransfer.clearData();
@@ -59,4 +66,4 @@ const DragAndDrop = props => {
   );
 };
 
-export default DragAndDrop;
+export default UploadArea;

@@ -8,7 +8,11 @@ const reducer = (state, action) => {
       return { ...state, inDropZone: action.inDropZone };
     case 'ADD_FILE_TO_LIST':
       // console.log(action.type);
-      return { ...state, fileList: state.fileList.concat(action.files) };
+      // update the file with new the version if already exist
+      let { fileList } = state;
+      const newFileNames = action.files.map(nf => nf.name);
+      fileList = fileList.filter(f => !newFileNames.includes(f.name));
+      return { ...state, fileList: fileList.concat(action.files) };
     default:
       // console.log(action.type);
       return state;
