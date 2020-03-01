@@ -36,8 +36,11 @@ const DragAndDrop = props => {
     if (files && files.length > 0) {
       const existingFiles = data.fileList.map(f => f.name)
       files = files.filter(f => !existingFiles.includes(f.name))
-
-      files.length > 0 && dispatch({ type: 'ADD_FILE_TO_LIST', files });
+      let fileNames = files.map(f => f.name);
+      if(files.length > 0) {
+        dispatch({ type: 'ADD_FILE_TO_LIST', files });
+        console.log(`Added file: ${fileNames}`);
+      }
       e.dataTransfer.clearData();
       dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
       dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
