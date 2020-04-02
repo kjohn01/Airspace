@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["browserslist", "flowtype"]
+  "cSpell.words": [
+    "browserslist",
+    "flowtype",
+    "onstatechange",
+    "onupdatefound",
+    "precached"
+  ]
 }
