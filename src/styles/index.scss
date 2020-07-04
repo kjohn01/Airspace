@@ -1,12 +1,6 @@
 // For general style settings 
-.App {
-  margin: 2rem;
-  text-align: center;
-}
-
-h1 {
-  color: #07f;
-}
+@import './customBootstrap.scss';
+@import './basic.scss';
 
 body {
   margin: 0;

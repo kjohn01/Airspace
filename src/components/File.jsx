@@ -8,7 +8,7 @@ const File = ({ fileName, uploadDate }) => {
   };
 
   return (
-    <div draggable onDragStart={handleDragStart} className="dropped-files">
+    <div draggable onDragStart={handleDragStart} className="text-primary text-left p-2 m-2 d-flex justify-content-between">
       <div>{fileName}</div>
       <div>{new Date(uploadDate).toString()}</div>
     </div>

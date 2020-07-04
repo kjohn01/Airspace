@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../styles/components.scss';
 
 const UploadArea = ({ data, dispatch }) => {
   const handleDragEnter = (e) => {
@@ -54,15 +55,17 @@ const UploadArea = ({ data, dispatch }) => {
     }
   };
 
+  const className = 'my-3 p-3 text-center bg-primary rounded shadow';
+
   return (
     <div
-      className={data.inDropZone ? 'drag-drop-zone inside-drag-area' : 'drag-drop-zone'}
+      className={data.inDropZone ? `${className} inside-drag-area` : className}
       onDrop={(e) => handleDrop(e)}
       onDragOver={(e) => handleDragOver(e)}
       onDragEnter={(e) => handleDragEnter(e)}
       onDragLeave={(e) => handleDragLeave(e)}
     >
-      <p>Drag files here to upload</p>
+      <p className="text-white">Drag files here to upload</p>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const App = () => {
     <div className="App">
       <NavBar />
       <Container>
-        <h1>File manager</h1>
+        <h1 className="text-center text-primary">File manager</h1>
         <UploadArea data={data} dispatch={dispatch} />
         <FileList data={data} />
       </Container>
