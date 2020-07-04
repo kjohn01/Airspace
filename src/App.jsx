@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 import React, { useReducer } from 'react';
-import './App.css';
-import { UploadArea, FileList } from './components/components';
+import './styles/App.scss';
+import Container from 'react-bootstrap/Container';
+import { UploadArea, FileList, NavBar } from './components/components';
 import reducer from './reducer';
 
 const App = () => {
@@ -11,9 +12,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>File manager</h1>
-      <UploadArea data={data} dispatch={dispatch} />
-      <FileList data={data} />
+      <NavBar />
+      <Container>
+        <h1>File manager</h1>
+        <UploadArea data={data} dispatch={dispatch} />
+        <FileList data={data} />
+      </Container>
     </div>
   );
 };
