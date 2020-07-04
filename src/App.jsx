@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
 import React, { useReducer } from 'react';
 import './App.css';
-import UploadArea from './UploadArea';
-import File from './File';
+import { UploadArea, FileList } from './components/components';
 import reducer from './reducer';
 
 const App = () => {
@@ -14,9 +13,7 @@ const App = () => {
     <div className="App">
       <h1>File manager</h1>
       <UploadArea data={data} dispatch={dispatch} />
-      <>
-        { data.fileList && data.fileList.length > 0 && data.fileList.map((f) => f && <File key={f.lastModified} fileName={f.name} uploadDate={f.uploadedAt} />)}
-      </>
+      <FileList data={data} />
     </div>
   );
 };
