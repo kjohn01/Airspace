@@ -1,5 +1,5 @@
-import FileList from './FileList';
+import File from './File';
 import UploadArea from './UploadArea';
 import NavBar from './NavBar';
 
-export { FileList, UploadArea, NavBar };
+export { File, UploadArea, NavBar };
