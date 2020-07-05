@@ -28,6 +28,9 @@ jobs:
     # Clean installation of dependencies
     - name: Setup 
       run: npm ci
+    # For different node versions
+    - name: Rebuild node-sass 
+      run: npm rebuild node-sass
     # Building ...
     - name: Build
       run: npm run build --if-present
