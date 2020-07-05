@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 import './styles/App.scss';
 import Container from 'react-bootstrap/Container';
 import { UploadArea, File, NavBar } from './components/components';
-import reducer from './reducer';
+import reducer from './scripts/reducer';
 
 const App = () => {
   const [data, dispatch] = useReducer(
