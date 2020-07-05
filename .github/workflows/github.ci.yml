@@ -38,5 +38,5 @@ jobs:
     - name: Test
       run: npm test
     # Deploy to firebase
-    - name: deploy to firebase
-      run: ./node_modules/.bin/firebase deploy -m "Pipeline $GITHUB_RUN_ID" --non-interactive --token ${{ secrets.FIREBASE_TOKEN }}
+#     - name: deploy to firebase
+#       run: ./node_modules/.bin/firebase deploy -m "Pipeline $GITHUB_RUN_ID" --non-interactive --token ${{ secrets.FIREBASE_TOKEN }}
