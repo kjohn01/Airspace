@@ -1,68 +1,40 @@
-# # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-# # Finally deploy to firebase hosting
-
-# name: firebase CI
-
-# on:
-#   push:
-#     branches: [ master ]
-#   pull_request:
-#     branches: [ master ]
-
-# jobs:
-#   setup-build-test-deploy:
-
-#     runs-on: ubuntu-latest
-
-#     strategy:
-#       matrix:
-#         node-version: [10.x, 12.x, 14.x]
-
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Use Node.js ${{ matrix.node-version }}
-#       uses: actions/setup-node@v1
-#       with:
-#         node-version: ${{ matrix.node-version }}
-#     # Clean installation of dependencies
-#     - name: Setup
-#       run: npm ci
-#     # Building ...
-#     - name: Build
-#       run: npm run build --if-present
-#     # Run tests
-#     - name: Test
-#       run: npm test
-#     # Deploy to firebase
-#     - name: deploy to firebase
-#       run: ./node_modules/.bin/firebase deploy -m "Pipeline $GITHUB_RUN_ID" --non-interactive --token ${{ secrets.FIREBASE_TOKEN }}
-
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
-
+name: Build and Deploy to firebase
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-
+    name: Build
+    runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+          name: build
+          path: build
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: build
+          path: build
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

@@ -1,11 +1,6 @@
 {
   "name": "myDropBox",
   "version": "0.1.0",
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>src/setupTests.js"
-    ]
-  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -55,7 +50,6 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "firebase-tools": "^8.4.3",
-    "jest": "^25.2.4"
+    "firebase-tools": "^8.4.3"
   }
 }
