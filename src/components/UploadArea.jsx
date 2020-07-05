@@ -1,10 +1,12 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-param-reassign */
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 
 const UploadArea = ({ data, dispatch }) => {
+  const { authUser } = useContext(AuthContext);
   const handleDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,7 +48,8 @@ const UploadArea = ({ data, dispatch }) => {
       });
       if (newFiles.length > 0) {
         const fileNames = newFiles.map((f) => f.name);
-        dispatch({ type: 'ADD_FILE_TO_LIST', files: newFiles });
+        dispatch({ type: 'UPLOAD_FILES_TO_CLOUD', files: newFiles, uid: authUser.uid });
+        // dispatch({ type: 'ADD_FILE_TO_LIST', files: newFiles });
         console.log(`Added file: ${fileNames}`);
       }
       e.dataTransfer.clearData();
