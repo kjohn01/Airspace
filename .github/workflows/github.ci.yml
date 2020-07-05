@@ -1,0 +1,48 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# Finally deploy to firebase hosting
+
+name: firebase CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  setup-build-test-deploy:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+#     - name: Cache
+#       uses: actions/cache@v2.0.0
+#       with:
+#         # A list of files, directories, and wildcard patterns to cache and restore
+#         path: 
+#         # An explicit key for restoring and saving the cache
+#         key: 
+#         # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
+#         restore-keys: # optional
+    # Clean installation of dependencies
+    - name: Setup 
+      run: npm ci
+    # Building ...
+    - name: Build
+      run: npm run build --if-present
+    # Run tests
+    - name: Test
+      run: npm test
+    # Deploy to firebase
+    - name: deploy to firebase
+      run: ./node_modules/.bin/firebase deploy -m "Pipeline $GITHUB_RUN_ID" --non-interactive --token ${{ secrets.FIREBASE_TOKEN }}
