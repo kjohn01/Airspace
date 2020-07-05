@@ -1,0 +1,29 @@
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { listenForAuthUser } from './auth';
+import AuthContext from './AuthContext';
+
+const GlobalAuthState = (props) => {
+  const [authUser, setAuthUser] = useState(undefined);
+
+  useEffect(() => {
+    listenForAuthUser((newAuthUser) => {
+      setAuthUser(newAuthUser);
+    });
+    return () => {
+      setAuthUser(null);
+    };
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ authUser, setAuthUser }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
+
+GlobalAuthState.propTypes = {
+  children: PropTypes.func,
+};
+
+export default GlobalAuthState;
