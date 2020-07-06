@@ -1,4 +1,4 @@
-import { auth, firebase } from './firebaseConfig';
+import { auth, firebase } from '../firebaseConfig';
 
 // Auth with Google
 

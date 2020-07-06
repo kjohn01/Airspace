@@ -1,6 +1,7 @@
+import { uploadFile } from './database';
+
 const reducer = (state, action) => {
   let { fileList } = state;
-  let newFileNames = '';
   switch (action.type) {
     case 'SET_DROP_DEPTH':
       // console.log(action.type);
@@ -8,13 +9,16 @@ const reducer = (state, action) => {
     case 'SET_IN_DROP_ZONE':
       // console.log(action.type);
       return { ...state, inDropZone: action.inDropZone };
+    case 'UPLOAD_FILES_TO_CLOUD':
+      // console.log(action.type);
+      action.files.forEach((file) => {
+        uploadFile(action.uid, file);
+      });
+      return state;
     case 'ADD_FILE_TO_LIST':
       // console.log(action.type);
-      // update the file with new the version if already exist
-
-      newFileNames = action.files.map((nf) => nf.name);
-      fileList = fileList.filter((f) => !newFileNames.includes(f.name));
-      return { ...state, fileList: fileList.concat(action.files) };
+      fileList = action.files.map((file) => file.data());
+      return { ...state, fileList };
     default:
       // console.log(action.type);
       return state;
