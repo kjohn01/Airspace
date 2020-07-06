@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import { storage, firestore, firebase } from './firebaseConfig';
-
+// firestore === db
 const storageRef = storage.ref();
 
 export const uploadFile = (uid, file) => {
@@ -50,4 +50,19 @@ export const uploadFile = (uid, file) => {
 
 export const deleteFile = (uid, fileID) => {
 
+};
+
+export const listenForFiles = (uid, dispatch) => {
+  console.log('listening for files on firebase!');
+  firestore.collection('users').doc(uid).collection('files').onSnapshot((docSnapshot) => {
+    dispatch({ type: 'ADD_FILE_TO_LIST', files: docSnapshot.docs });
+  }, (err) => {
+    console.log(`Encountered error: ${err}`);
+  });
+};
+
+export const detachListener = (uid) => {
+  console.log('detached from firebase!');
+  firestore.collection('users').doc(uid).onSnapshot(() => {
+  });
 };

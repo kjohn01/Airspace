@@ -26,7 +26,8 @@ const GlobalAuthState = (props) => {
 };
 
 GlobalAuthState.propTypes = {
-  children: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.array.isRequired,
 };
 
 export default GlobalAuthState;

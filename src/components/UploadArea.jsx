@@ -49,7 +49,6 @@ const UploadArea = ({ data, dispatch }) => {
       if (newFiles.length > 0) {
         const fileNames = newFiles.map((f) => f.name);
         dispatch({ type: 'UPLOAD_FILES_TO_CLOUD', files: newFiles, uid: authUser.uid });
-        // dispatch({ type: 'ADD_FILE_TO_LIST', files: newFiles });
         console.log(`Added file: ${fileNames}`);
       }
       e.dataTransfer.clearData();
