@@ -1,6 +1,6 @@
 import { uploadFile, deleteFile } from './database';
 
-const reducer = async (state, action) => {
+const reducer = (state, action) => {
   let { fileList } = state;
   let target; // for updating & deleting files
   switch (action.type) {
