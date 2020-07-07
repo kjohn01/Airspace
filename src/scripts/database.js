@@ -48,7 +48,10 @@ export const uploadFile = async (uid, file) => {
   });
 };
 
-export const deleteFile = async (uid, fileName) => storageRef.child(`${uid}/${fileName}`).delete().then(() => console.log('File deleted successfully')).catch((err) => console.error(err));
+export const deleteFile = async (uid, fileName) => firestore.collection('users').doc(uid).collection('files').doc(fileName)
+  .delete()
+  .then(() => console.log('File deleted successfully'))
+  .catch((err) => console.error(err));
 
 export const listenForFiles = (uid, dispatch) => {
   console.log('listening for files on firebase!');
