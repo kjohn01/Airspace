@@ -1,6 +1,6 @@
 import { uploadFile, deleteFile } from './database';
 
-const reducer = (state, action) => {
+const reducer = async (state, action) => {
   let { fileList } = state;
   let target; // for updating & deleting files
   switch (action.type) {
@@ -12,9 +12,9 @@ const reducer = (state, action) => {
       return { ...state, inDropZone: action.inDropZone };
     case 'UPLOAD_FILES_TO_CLOUD':
       // console.log(action.type);
-      action.files.forEach((file) => {
+      action.files.forEach(async (file) => {
         // Update cloud
-        uploadFile(action.uid, file);
+        await uploadFile(action.uid, file);
         // Update local
         target = fileList.findIndex((f) => f.name === file.name);
         // Handle existing files
@@ -28,7 +28,7 @@ const reducer = (state, action) => {
       });
       return state;
     case 'DELETE_FILES_FROM_CLOUD':
-      console.log(action.type);
+      // console.log(action.type);
       // Check if the file exist locally;
       target = fileList.findIndex((f) => f.name === action.file);
       if (target >= 0) {
