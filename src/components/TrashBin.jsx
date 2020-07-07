@@ -5,19 +5,17 @@ import PropTypes from 'prop-types';
 import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 
-const UploadArea = ({ data, dispatch }) => {
+const TrashBin = ({ data, dispatch }) => {
   const { authUser } = useContext(AuthContext);
   const handleDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth + 1 });
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth - 1 });
     if (data.dropDepth <= 0) dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
   };
@@ -25,37 +23,23 @@ const UploadArea = ({ data, dispatch }) => {
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    e.dataTransfer.dropEffect = 'copy';
     dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: true });
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    const files = [...e.dataTransfer.files];
-
-    if (authUser && files && files.length > 0) {
-      // Time stamp and check for existing files or updated version
-      let newFiles = files.map((f) => {
-        f.uploadedAt = Date.now();
-        return f;
-      });
-
-      newFiles = newFiles.filter((f) => {
-        const i = data.fileList.findIndex((ef) => ef.name === f.name);
-        return i < 0 || data.fileList[i].uploadedAt < f.uploadedAt;
-      });
-      if (newFiles.length > 0) dispatch({ type: 'UPLOAD_FILES_TO_CLOUD', files: newFiles, uid: authUser.uid });
-
+    const file = e.dataTransfer.getData('text');
+    if (authUser && file) {
+      dispatch({ type: 'DELETE_FILES_FROM_CLOUD', file, uid: authUser.uid });
+      console.log(`Deleted file: ${file}`);
       e.dataTransfer.clearData();
       dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
       dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
     }
   };
 
-  const className = 'my-3 p-3 text-center bg-primary rounded shadow';
+  const className = 'my-3 p-3 text-center bg-danger rounded shadow';
 
   return (
     <div
@@ -65,14 +49,14 @@ const UploadArea = ({ data, dispatch }) => {
       onDragEnter={(e) => handleDragEnter(e)}
       onDragLeave={(e) => handleDragLeave(e)}
     >
-      <p className="text-white">Drag files here to upload</p>
+      <p className="text-white">Drag files here to delete</p>
     </div>
   );
 };
 
-UploadArea.propTypes = {
+TrashBin.propTypes = {
   data: PropTypes.any.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default UploadArea;
+export default TrashBin;
