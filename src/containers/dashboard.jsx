@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { useReducer, useContext, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
-import { UploadArea, File } from '../components/components';
+import { UploadArea, TrashBin, File } from '../components/components';
 import reducer from '../scripts/reducer';
 import AuthContext from '../scripts/Auth/AuthContext';
 import { listenForFiles, detachListener } from '../scripts/database';
@@ -26,10 +26,11 @@ const Dashboard = () => {
         <h1 className="text-center text-primary">File manager</h1>
         <UploadArea data={data} dispatch={dispatch} />
         <ol className="dropped-files">
-          {data.fileList.map((f) => (
+          { data.fileList && data.fileList.map((f) => (
             <File key={f.name} fileName={f.name} uploadDate={f.lastModified} size={f.size} type={f.type} />
           ))}
         </ol>
+        <TrashBin data={data} dispatch={dispatch} />
       </Container>
     );
   }

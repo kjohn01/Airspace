@@ -4,13 +4,13 @@ import { storage, firestore, firebase } from './firebaseConfig';
 // firestore === db
 const storageRef = storage.ref();
 
-export const uploadFile = (uid, file) => {
+export const uploadFile = async (uid, file) => {
   const uploadTask = storageRef.child(`${uid}/${file.name}`).put(file);
   // Register three observers:
   // 1. 'state_changed' observer, called any time the state changes
   // 2. Error observer, called on failure
   // 3. Completion observer, called on successful completion
-  uploadTask.on('state_changed', (snapshot) => {
+  await uploadTask.on('state_changed', (snapshot) => {
     // Observe state change events such as progress, pause, and resume
     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -48,9 +48,10 @@ export const uploadFile = (uid, file) => {
   });
 };
 
-export const deleteFile = (uid, fileID) => {
-
-};
+export const deleteFile = async (uid, fileName) => firestore.collection('users').doc(uid).collection('files').doc(fileName)
+  .delete()
+  .then(() => console.log('File deleted successfully'))
+  .catch((err) => console.error(err));
 
 export const listenForFiles = (uid, dispatch) => {
   console.log('listening for files on firebase!');

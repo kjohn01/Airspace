@@ -5,12 +5,17 @@ const File = ({
   fileName, uploadDate, size, type,
 }) => {
   const handleDragStart = (e) => {
-    e.dataTransfer.setData('text/plain', e.target.id);
+    e.dataTransfer.setData('text/plain', fileName);
+    e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.dropEffect = 'move';
   };
 
+  const handleDragEnd = (e) => {
+    e.dataTransfer.clearData();
+  };
+
   return (
-    <div draggable onDragStart={handleDragStart} className="text-primary text-left p-2 m-2 d-flex justify-content-between">
+    <div draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="text-primary text-left p-2 m-2 d-flex justify-content-between">
       <div>{fileName}</div>
       <p>
         size:
