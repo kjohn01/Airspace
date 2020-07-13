@@ -1,12 +1,13 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-param-reassign */
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import AuthContext from '../scripts/Auth/AuthContext';
+import UploadButton from './UploadButton';
 import '../styles/components.scss';
 
-const UploadArea = ({ data, dispatch }) => {
-  const { authUser } = useContext(AuthContext);
+const UploadArea = ({
+  data, dispatch, handleClose, uploadFiles,
+}) => {
   const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -34,26 +35,10 @@ const UploadArea = ({ data, dispatch }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const files = [...e.dataTransfer.files];
-
-    if (authUser && files && files.length > 0) {
-      // Time stamp and check for existing files or updated version
-      let newFiles = files.map((f) => {
-        f.uploadedAt = Date.now();
-        return f;
-      });
-
-      newFiles = newFiles.filter((f) => {
-        const i = data.fileList.findIndex((ef) => ef.name === f.name);
-        return i < 0 || data.fileList[i].uploadedAt < f.uploadedAt;
-      });
-      if (newFiles.length > 0) dispatch({ type: 'UPLOAD_FILES_TO_CLOUD', files: newFiles, uid: authUser.uid });
-
-      e.dataTransfer.clearData();
-      dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
-      dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-    }
-  }, [dispatch, authUser, data.fileList]);
+    uploadFiles([...e.dataTransfer.files]);
+    e.dataTransfer.clearData();
+    handleClose();
+  }, [uploadFiles, handleClose]);
 
   const className = 'my-3 p-3 text-center bg-primary rounded shadow';
 
@@ -66,13 +51,16 @@ const UploadArea = ({ data, dispatch }) => {
       onDragLeave={handleDragLeave}
     >
       <p className="text-white">Drag files here to upload</p>
+      <UploadButton uploadFiles={uploadFiles} handleClose={handleClose} />
     </div>
   );
 };
 
 UploadArea.propTypes = {
   data: PropTypes.any.isRequired,
-  dispatch: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  uploadFiles: PropTypes.func.isRequired,
 };
 
 export default UploadArea;
