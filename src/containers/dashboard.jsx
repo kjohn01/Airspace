@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
-import React, { useReducer, useContext, useEffect } from 'react';
+import React, {
+  useReducer, useContext, useEffect, useMemo,
+} from 'react';
 import Container from 'react-bootstrap/Container';
 import { UploadArea, TrashBin, File } from '../components/components';
 import reducer from '../scripts/reducer';
@@ -20,16 +22,24 @@ const Dashboard = () => {
     };
   }, [authUser]);
 
+  // Implementing useMemo to cache file list to prevent redundant renders
+  const list = useMemo(() => {
+    if (data.fileList) {
+      return data.fileList.map((f) => (
+        <File key={f.name} fileName={f.name} uploadDate={f.lastModified} size={f.size} type={f.type} />
+      ));
+    }
+    return null;
+  }, [data.fileList]);
+
   if (authUser) {
     return (
       <Container>
         <h1 className="text-center text-primary">File manager</h1>
         <UploadArea data={data} dispatch={dispatch} />
-        <ol className="dropped-files">
-          { data.fileList && data.fileList.map((f) => (
-            <File key={f.name} fileName={f.name} uploadDate={f.lastModified} size={f.size} type={f.type} />
-          ))}
-        </ol>
+        <div className="dropped-files">
+          {list}
+        </div>
         <TrashBin data={data} dispatch={dispatch} />
       </Container>
     );
