@@ -1,36 +1,36 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-param-reassign */
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 
 const UploadArea = ({ data, dispatch }) => {
   const { authUser } = useContext(AuthContext);
-  const handleDragEnter = (e) => {
+  const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth + 1 });
-  };
+  }, [dispatch, data.dropDepth]);
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth - 1 });
     if (data.dropDepth <= 0) dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-  };
+  }, [dispatch, data.dropDepth]);
 
-  const handleDragOver = (e) => {
+  const handleDragOver = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     e.dataTransfer.dropEffect = 'copy';
     dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: true });
-  };
+  }, [dispatch]);
 
-  const handleDrop = (e) => {
+  const handleDrop = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -53,17 +53,17 @@ const UploadArea = ({ data, dispatch }) => {
       dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
       dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
     }
-  };
+  }, [dispatch, authUser, data.fileList]);
 
   const className = 'my-3 p-3 text-center bg-primary rounded shadow';
 
   return (
     <div
       className={data.inDropZone ? `${className} inside-drag-area` : className}
-      onDrop={(e) => handleDrop(e)}
-      onDragOver={(e) => handleDragOver(e)}
-      onDragEnter={(e) => handleDragEnter(e)}
-      onDragLeave={(e) => handleDragLeave(e)}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
     >
       <p className="text-white">Drag files here to upload</p>
     </div>

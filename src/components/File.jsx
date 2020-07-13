@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const File = ({
   fileName, uploadDate, size, type,
 }) => {
-  const handleDragStart = (e) => {
+  const handleDragStart = useCallback((e) => {
     e.dataTransfer.setData('text/plain', fileName);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.dropEffect = 'move';
-  };
+  }, [fileName]);
 
-  const handleDragEnd = (e) => {
+  const handleDragEnd = useCallback((e) => {
     e.dataTransfer.clearData();
-  };
+  }, []);
 
   return (
     <div draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="text-primary text-left p-2 m-2 d-flex justify-content-between">

@@ -1,32 +1,32 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-param-reassign */
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 
 const TrashBin = ({ data, dispatch }) => {
   const { authUser } = useContext(AuthContext);
-  const handleDragEnter = (e) => {
+  const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth + 1 });
-  };
+  }, [dispatch, data.dropDepth]);
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth - 1 });
     if (data.dropDepth <= 0) dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-  };
+  }, [dispatch, data.dropDepth]);
 
-  const handleDragOver = (e) => {
+  const handleDragOver = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: true });
-  };
+  }, [dispatch]);
 
-  const handleDrop = (e) => {
+  const handleDrop = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.getData('text');
@@ -37,7 +37,7 @@ const TrashBin = ({ data, dispatch }) => {
       dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
       dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
     }
-  };
+  }, [dispatch, authUser]);
 
   const className = 'my-3 p-3 text-center bg-danger rounded shadow';
 
