@@ -72,7 +72,7 @@ const UploadArea = ({ data, dispatch }) => {
 
 UploadArea.propTypes = {
   data: PropTypes.any.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.object.isRequired,
 };
 
 export default UploadArea;

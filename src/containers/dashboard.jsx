@@ -3,7 +3,8 @@ import React, {
   useReducer, useContext, useEffect, useMemo,
 } from 'react';
 import Container from 'react-bootstrap/Container';
-import { UploadArea, TrashBin, File } from '../components/components';
+import { TrashBin, File } from '../components/components';
+import UploadBTN from './UploadBTN';
 import reducer from '../scripts/reducer';
 import AuthContext from '../scripts/Auth/AuthContext';
 import { listenForFiles, detachListener } from '../scripts/database';
@@ -36,7 +37,7 @@ const Dashboard = () => {
     return (
       <Container>
         <h1 className="text-center text-primary">File manager</h1>
-        <UploadArea data={data} dispatch={dispatch} />
+        <UploadBTN data={data} dispatch={dispatch} />
         <div className="dropped-files">
           {list}
         </div>
