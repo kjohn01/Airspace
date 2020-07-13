@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 
@@ -39,7 +40,7 @@ const TrashBin = ({ data, dispatch }) => {
     }
   }, [dispatch, authUser]);
 
-  const className = 'my-3 p-3 text-center bg-danger rounded shadow';
+  const className = 'bg-secondary d-none d-md-block m-2 rounded-circle shadow text-center text-white';
 
   return (
     <div
@@ -49,7 +50,7 @@ const TrashBin = ({ data, dispatch }) => {
       onDragEnter={(e) => handleDragEnter(e)}
       onDragLeave={(e) => handleDragLeave(e)}
     >
-      <p className="text-white">Drag files here to delete</p>
+      <DeleteRoundedIcon fontSize="large" className="m-3" />
     </div>
   );
 };

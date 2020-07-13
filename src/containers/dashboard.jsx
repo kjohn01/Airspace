@@ -37,11 +37,13 @@ const Dashboard = () => {
     return (
       <Container>
         <h1 className="text-center text-primary">File manager</h1>
-        <UploadBTN data={data} dispatch={dispatch} />
         <div className="dropped-files">
           {list}
         </div>
-        <TrashBin data={data} dispatch={dispatch} />
+        <div className="d-flex fixed-bottom justify-content-end justify-content-md-between px-3 px-md-5">
+          <UploadBTN data={data} dispatch={dispatch} />
+          <TrashBin data={data} dispatch={dispatch} />
+        </div>
       </Container>
     );
   }

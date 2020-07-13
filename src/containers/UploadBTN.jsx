@@ -36,12 +36,12 @@ const UploadBTN = ({ data, dispatch }) => {
 
   return (
     <>
-      <Button variant="danger" className="d-none d-md-flex px-2 rounded-pill shadow" onClick={handleShow}>
+      <Button variant="danger" className="align-self-center d-md-flex d-none rounded-pill shadow" onClick={handleShow}>
         <AddIcon fontSize="large" />
         <p className="font-weight-bolder mr-2 my-1 uploadBtnText">Upload</p>
       </Button>
 
-      <div className="d-flex d-md-none">
+      <div className="d-flex d-md-none my-3">
         <UploadButton uploadFiles={uploadFiles} handleClose={handleClose} />
       </div>
 
