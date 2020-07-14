@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 import React, {
-  useReducer, useContext, useEffect, useMemo,
+  useReducer, useContext, useEffect,
 } from 'react';
 import Container from 'react-bootstrap/Container';
-import { TrashBin, File } from '../components/components';
+import { TrashBin } from '../components/components';
 import UploadBTN from './UploadBTN';
+import FileList from './FileList';
 import reducer from '../scripts/reducer';
 import AuthContext from '../scripts/Auth/AuthContext';
 import { listenForFiles, detachListener } from '../scripts/database';
@@ -23,22 +24,12 @@ const Dashboard = () => {
     };
   }, [authUser]);
 
-  // Implementing useMemo to cache file list to prevent redundant renders
-  const list = useMemo(() => {
-    if (data.fileList) {
-      return data.fileList.map((f) => (
-        <File key={f.name} fileName={f.name} uploadDate={f.lastModified} size={f.size} type={f.type} />
-      ));
-    }
-    return null;
-  }, [data.fileList]);
-
   if (authUser) {
     return (
       <Container>
         <h1 className="text-center text-primary">File manager</h1>
         <div className="dropped-files">
-          {list}
+          <FileList data={data} />
         </div>
         <div className="d-flex fixed-bottom justify-content-end justify-content-md-between px-3 px-md-5">
           <UploadBTN data={data} dispatch={dispatch} />

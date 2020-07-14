@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { TableRow, TableCell } from '@material-ui/core';
 
 const File = ({
-  fileName, uploadDate, size, type,
+  fileName, uploadDate, size,
 }) => {
   const handleDragStart = useCallback((e) => {
     e.dataTransfer.setData('text/plain', fileName);
@@ -15,18 +17,13 @@ const File = ({
   }, []);
 
   return (
-    <div draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="text-primary text-left p-2 m-2 d-flex justify-content-between">
-      <div>{fileName}</div>
-      <p>
-        size:
-        {size}
-      </p>
-      <p>
-        type:
-        {type}
-      </p>
-      <div>{new Date(uploadDate).toString()}</div>
-    </div>
+    <TableRow key={fileName} draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <TableCell component="th" scope="row">
+        {fileName}
+      </TableCell>
+      <TableCell align="right" className="table-cell">{size}</TableCell>
+      <TableCell align="right" className="table-cell">{new Date(uploadDate).toString()}</TableCell>
+    </TableRow>
   );
 };
 
@@ -34,7 +31,6 @@ File.propTypes = {
   fileName: PropTypes.string.isRequired,
   uploadDate: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default File;
