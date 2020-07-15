@@ -24,7 +24,7 @@ const FileList = ({ data }) => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right" className="table-cell">size&nbsp;(KB)</TableCell>
+            <TableCell align="right" className="table-cell">size</TableCell>
             <TableCell align="right" className="table-cell">Last Modified</TableCell>
           </TableRow>
         </TableHead>

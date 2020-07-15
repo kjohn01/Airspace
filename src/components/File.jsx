@@ -2,6 +2,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import filesize from 'filesize';
 import { TableRow, TableCell } from '@material-ui/core';
 
 const File = ({
@@ -28,7 +29,7 @@ const File = ({
         <h5>{fileName}</h5>
         <p>{`Modified at: ${lastModified}`}</p>
       </TableCell>
-      <TableCell align="right" className="table-cell">{size}</TableCell>
+      <TableCell align="right" className="table-cell">{filesize(size)}</TableCell>
       <TableCell align="right" className="table-cell">{lastModified}</TableCell>
     </TableRow>
   );
