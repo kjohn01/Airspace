@@ -40,7 +40,7 @@ const UploadArea = ({
     handleClose();
   }, [uploadFiles, handleClose]);
 
-  const className = 'my-3 p-3 text-center bg-primary rounded shadow';
+  const className = 'p-3 text-center';
 
   return (
     <div
@@ -50,7 +50,8 @@ const UploadArea = ({
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
-      <p className="text-white">Drag files here to upload</p>
+      <h3 className="mt-5 text-secondary">Drag files here to upload</h3>
+      <h3 className="my-3 text-secondary">or</h3>
       <UploadButton uploadFiles={uploadFiles} handleClose={handleClose} />
     </div>
   );

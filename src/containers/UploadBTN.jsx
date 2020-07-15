@@ -46,9 +46,6 @@ const UploadBTN = ({ data, dispatch }) => {
       </div>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Uploading your files</Modal.Title>
-        </Modal.Header>
         <Modal.Body>
           <UploadArea data={data} dispatch={dispatch} handleClose={handleClose} uploadFiles={uploadFiles} />
         </Modal.Body>

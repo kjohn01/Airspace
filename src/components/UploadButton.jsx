@@ -21,10 +21,11 @@ const UploadInput = ({ uploadFiles, handleClose }) => {
     <>
       <Button
         size="lg"
-        className="m-3 d-none d-md-flex"
+        variant="secondary"
+        className="mb-5 mx-auto d-none d-md-flex"
         onClick={onButtonClick}
       >
-        Upload from local
+        Choose files
       </Button>
       <Button
         size="lg"
