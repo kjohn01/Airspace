@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { TableRow, TableCell } from '@material-ui/core';
 
 const File = ({
@@ -16,13 +17,19 @@ const File = ({
     e.dataTransfer.clearData();
   }, []);
 
+  const lastModified = moment(uploadDate).fromNow();
+
   return (
     <TableRow key={fileName} draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <TableCell component="th" scope="row">
+      <TableCell component="th" scope="row" className="table-cell">
         {fileName}
       </TableCell>
+      <TableCell component="th" scope="row" className="d-block d-md-none">
+        <h5>{fileName}</h5>
+        <p>{`Modified at: ${lastModified}`}</p>
+      </TableCell>
       <TableCell align="right" className="table-cell">{size}</TableCell>
-      <TableCell align="right" className="table-cell">{new Date(uploadDate).toString()}</TableCell>
+      <TableCell align="right" className="table-cell">{lastModified}</TableCell>
     </TableRow>
   );
 };
