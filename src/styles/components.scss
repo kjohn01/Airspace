@@ -1,6 +1,6 @@
 // Specific styles for each components
-@import './basic.scss';
-@import './customBootstrap.scss';
+@import "./basic.scss";
+@import "./customBootstrap.scss";
 
 .file-exists {
   text-align: left;
@@ -8,4 +8,10 @@
 
 .inside-drag-area {
   opacity: 0.7;
+}
+
+@media (max-width: 767px) {
+  .table-cell {
+    display: none !important;
+  }
 }

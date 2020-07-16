@@ -1,32 +1,37 @@
-import React from 'react';
+/* eslint-disable max-len */
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import filesize from 'filesize';
+import { TableRow, TableCell } from '@material-ui/core';
 
 const File = ({
-  fileName, uploadDate, size, type,
+  fileName, uploadDate, size,
 }) => {
-  const handleDragStart = (e) => {
+  const handleDragStart = useCallback((e) => {
     e.dataTransfer.setData('text/plain', fileName);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.dropEffect = 'move';
-  };
+  }, [fileName]);
 
-  const handleDragEnd = (e) => {
+  const handleDragEnd = useCallback((e) => {
     e.dataTransfer.clearData();
-  };
+  }, []);
+
+  const lastModified = moment(uploadDate).fromNow();
 
   return (
-    <div draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="text-primary text-left p-2 m-2 d-flex justify-content-between">
-      <div>{fileName}</div>
-      <p>
-        size:
-        {size}
-      </p>
-      <p>
-        type:
-        {type}
-      </p>
-      <div>{new Date(uploadDate).toString()}</div>
-    </div>
+    <TableRow key={fileName} draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <TableCell component="th" scope="row" className="table-cell">
+        {fileName}
+      </TableCell>
+      <TableCell component="th" scope="row" className="d-block d-md-none">
+        <h5>{fileName}</h5>
+        <p>{`Modified at: ${lastModified}`}</p>
+      </TableCell>
+      <TableCell align="right" className="table-cell">{filesize(size)}</TableCell>
+      <TableCell align="right" className="table-cell">{lastModified}</TableCell>
+    </TableRow>
   );
 };
 
@@ -34,7 +39,6 @@ File.propTypes = {
   fileName: PropTypes.string.isRequired,
   uploadDate: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default File;

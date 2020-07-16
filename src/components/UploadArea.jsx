@@ -1,71 +1,58 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-param-reassign */
-import React, { useContext } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import AuthContext from '../scripts/Auth/AuthContext';
+import UploadButton from './UploadButton';
 import '../styles/components.scss';
 
-const UploadArea = ({ data, dispatch }) => {
-  const { authUser } = useContext(AuthContext);
-  const handleDragEnter = (e) => {
+const UploadArea = ({
+  data, dispatch, handleClose, uploadFiles,
+}) => {
+  const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth + 1 });
-  };
+  }, [dispatch, data.dropDepth]);
 
-  const handleDragLeave = (e) => {
+  const handleDragLeave = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     dispatch({ type: 'SET_DROP_DEPTH', dropDepth: data.dropDepth - 1 });
     if (data.dropDepth <= 0) dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-  };
+  }, [dispatch, data.dropDepth]);
 
-  const handleDragOver = (e) => {
+  const handleDragOver = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     e.dataTransfer.dropEffect = 'copy';
     dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: true });
-  };
+  }, [dispatch]);
 
-  const handleDrop = (e) => {
+  const handleDrop = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const files = [...e.dataTransfer.files];
+    uploadFiles([...e.dataTransfer.files]);
+    e.dataTransfer.clearData();
+    handleClose();
+  }, [uploadFiles, handleClose]);
 
-    if (authUser && files && files.length > 0) {
-      // Time stamp and check for existing files or updated version
-      let newFiles = files.map((f) => {
-        f.uploadedAt = Date.now();
-        return f;
-      });
-
-      newFiles = newFiles.filter((f) => {
-        const i = data.fileList.findIndex((ef) => ef.name === f.name);
-        return i < 0 || data.fileList[i].uploadedAt < f.uploadedAt;
-      });
-      if (newFiles.length > 0) dispatch({ type: 'UPLOAD_FILES_TO_CLOUD', files: newFiles, uid: authUser.uid });
-
-      e.dataTransfer.clearData();
-      dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
-      dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-    }
-  };
-
-  const className = 'my-3 p-3 text-center bg-primary rounded shadow';
+  const className = 'p-3 text-center';
 
   return (
     <div
       className={data.inDropZone ? `${className} inside-drag-area` : className}
-      onDrop={(e) => handleDrop(e)}
-      onDragOver={(e) => handleDragOver(e)}
-      onDragEnter={(e) => handleDragEnter(e)}
-      onDragLeave={(e) => handleDragLeave(e)}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
     >
-      <p className="text-white">Drag files here to upload</p>
+      <h3 className="mt-5 text-secondary">Drag files here to upload</h3>
+      <h3 className="my-3 text-secondary">or</h3>
+      <UploadButton uploadFiles={uploadFiles} handleClose={handleClose} />
     </div>
   );
 };
@@ -73,6 +60,8 @@ const UploadArea = ({ data, dispatch }) => {
 UploadArea.propTypes = {
   data: PropTypes.any.isRequired,
   dispatch: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  uploadFiles: PropTypes.func.isRequired,
 };
 
 export default UploadArea;
