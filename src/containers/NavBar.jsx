@@ -1,10 +1,12 @@
+/* eslint-disable import/no-cycle */
 import React, { useContext } from 'react';
 import {
   AppBar, Toolbar, IconButton, Typography, Button,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AuthContext from '../scripts/Auth/AuthContext';
-import { signInWithGoogle, signOut } from '../scripts/Auth/auth';
+import { signOut } from '../scripts/Auth/auth';
+import { SignInWithGoogleBTN } from '../components/components';
 
 const NavBar = () => {
   const { authUser } = useContext(AuthContext);
@@ -25,7 +27,7 @@ const NavBar = () => {
           </Typography>
         </div>
         {
-          !authUser ? <Button color="inherit" onClick={signInWithGoogle}>Login</Button> : <Button color="inherit" onClick={signOut}>Logout</Button>
+          !authUser ? <SignInWithGoogleBTN /> : <Button color="inherit" onClick={signOut}>Logout</Button>
         }
       </Toolbar>
     </AppBar>

@@ -4,6 +4,7 @@ import './styles/App.scss';
 import { Spinner } from 'react-bootstrap';
 import { NavBar } from './components/components';
 import Dashboard from './containers/Dashboard';
+import LandingPage from './containers/LandingPage';
 import AuthContext from './scripts/Auth/AuthContext';
 
 // const Dashboard = React.lazy(() => import('./containers/Dashboard'));
@@ -26,7 +27,7 @@ const App = () => {
                 </Spinner>
               </div>
             )
-            : <h1 className="text-center text-primary fixed-center">Plz login first</h1>
+            : <LandingPage />
     }
     </>
   );
