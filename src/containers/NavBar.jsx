@@ -27,7 +27,7 @@ const NavBar = () => {
           </Typography>
         </div>
         {
-          !authUser ? <SignInWithGoogleBTN /> : <Button color="inherit" onClick={signOut}>Logout</Button>
+          !authUser ? <SignInWithGoogleBTN className="text-white" /> : <Button color="inherit" onClick={signOut}>Logout</Button>
         }
       </Toolbar>
     </AppBar>
