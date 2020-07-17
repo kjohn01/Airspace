@@ -3,7 +3,7 @@
 import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Table, TableCell, TableContainer, TableHead, TableRow, Paper,
+  Table, TableCell, TableContainer, TableHead, TableBody, TableRow, Paper,
 } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
 
@@ -20,11 +20,11 @@ const FileList = ({ data }) => (
         </TableRow>
       </TableHead>
       <Suspense fallback={(
-        <div className="fixed-center">
+        <TableBody className="fixed-center">
           <Spinner animation="border" role="status" variant="secondary">
             <span className="sr-only">Loading...</span>
           </Spinner>
-        </div>
+        </TableBody>
           )}
       >
         <Files data={data} />

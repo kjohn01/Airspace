@@ -44,7 +44,9 @@ const UploadArea = ({
     handleClose();
   }, [handleClose, dispatch, uid]);
 
-  const className = 'p-3 text-center';
+  const className = data.fileList.length > 0 ? 'p-3 text-center' : 'd-flex flex-column justify-content-center text-center wallpaper px-4';
+
+  const intro = data.fileList.length > 0 ? 'Drag files here to upload' : 'Just drag files here for your first upload';
 
   return (
     <div
@@ -54,8 +56,8 @@ const UploadArea = ({
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
     >
-      <h3 className="mt-5 text-secondary">Drag files here to upload</h3>
-      <h3 className="my-3 text-secondary">or</h3>
+      <h3 className="text-dark">{intro}</h3>
+      <h3 className="my-3 text-dark">or</h3>
       <UploadButton data={data} dispatch={dispatch} handleClose={handleClose} />
     </div>
   );
