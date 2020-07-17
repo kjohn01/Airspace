@@ -6,7 +6,6 @@ import {
   Table, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
 import { Spinner } from 'react-bootstrap';
-// import Files from './Files';
 
 const Files = React.lazy(() => import('./Files'));
 

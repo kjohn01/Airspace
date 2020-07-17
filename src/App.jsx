@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { useContext } from 'react';
 import './styles/App.scss';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Container } from 'react-bootstrap';
 import { NavBar, Footer } from './components/components';
 import Dashboard from './containers/Dashboard';
 import LandingPage from './containers/LandingPage';
@@ -21,11 +21,13 @@ const App = () => {
           ? <Dashboard />
           : authUser === undefined
             ? (
-              <div className="fixed-center">
-                <Spinner animation="border" role="status" variant="secondary">
-                  <span className="sr-only">Loading...</span>
-                </Spinner>
-              </div>
+              <Container>
+                <div className="fixed-center">
+                  <Spinner animation="border" role="status" variant="secondary">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              </Container>
             )
             : <LandingPage />
       }

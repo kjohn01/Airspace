@@ -9,7 +9,10 @@ const Files = ({ data }) => {
   const list = useMemo(() => data.fileList.map((f) => (
     <File key={f.name} fileName={f.name} uploadDate={f.lastModified} size={f.size} type={f.type} />
   )), [data.fileList]);
-  return <TableBody>{list}</TableBody>;
+
+  return (
+    <TableBody>{list}</TableBody>
+  );
 };
 
 FileList.propTypes = {

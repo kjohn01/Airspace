@@ -1,13 +1,17 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-param-reassign */
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import UploadButton from './UploadButton';
+import uploadFiles from '../scripts/helper_functions';
+import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 
 const UploadArea = ({
-  data, dispatch, handleClose, uploadFiles,
+  data, dispatch, handleClose,
 }) => {
+  const { uid } = useContext(AuthContext).authUser;
+
   const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -35,10 +39,10 @@ const UploadArea = ({
     e.preventDefault();
     e.stopPropagation();
 
-    uploadFiles([...e.dataTransfer.files]);
+    uploadFiles(uid, dispatch, [...e.dataTransfer.files]);
     e.dataTransfer.clearData();
     handleClose();
-  }, [uploadFiles, handleClose]);
+  }, [handleClose, dispatch, uid]);
 
   const className = 'p-3 text-center';
 
@@ -52,7 +56,7 @@ const UploadArea = ({
     >
       <h3 className="mt-5 text-secondary">Drag files here to upload</h3>
       <h3 className="my-3 text-secondary">or</h3>
-      <UploadButton uploadFiles={uploadFiles} handleClose={handleClose} />
+      <UploadButton data={data} dispatch={dispatch} handleClose={handleClose} />
     </div>
   );
 };
@@ -60,8 +64,11 @@ const UploadArea = ({
 UploadArea.propTypes = {
   data: PropTypes.any.isRequired,
   dispatch: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  uploadFiles: PropTypes.func.isRequired,
+  handleClose: PropTypes.func,
+};
+
+UploadArea.defaultProps = {
+  handleClose: () => {},
 };
 
 export default UploadArea;
