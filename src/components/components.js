@@ -6,7 +6,8 @@ import TrashBin from './TrashBin';
 import NavBar from '../containers/NavBar';
 import GlobalAuthState from '../scripts/Auth/GlobalAuthState';
 import SignInWithGoogleBTN from './SignInWithGoogleBTN';
+import Footer from './Footer';
 
 export {
-  File, UploadArea, TrashBin, NavBar, GlobalAuthState, UploadButton, SignInWithGoogleBTN,
+  File, UploadArea, TrashBin, NavBar, GlobalAuthState, UploadButton, SignInWithGoogleBTN, Footer,
 };

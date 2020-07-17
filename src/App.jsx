@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import './styles/App.scss';
 import { Spinner } from 'react-bootstrap';
-import { NavBar } from './components/components';
+import { NavBar, Footer } from './components/components';
 import Dashboard from './containers/Dashboard';
 import LandingPage from './containers/LandingPage';
 import AuthContext from './scripts/Auth/AuthContext';
@@ -28,7 +28,8 @@ const App = () => {
               </div>
             )
             : <LandingPage />
-    }
+      }
+      <Footer />
     </>
   );
 };

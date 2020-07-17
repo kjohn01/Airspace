@@ -16,7 +16,7 @@ const NavBar = () => {
   // }, []);
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className="bg-dark">
       <Toolbar className="d-flex justify-content-between">
         <div className="d-flex">
           <IconButton edge="start" className="menuButton" color="inherit" aria-label="menu">
