@@ -6,7 +6,7 @@ import { SignInWithGoogleBTN } from '../components/components';
 const DESCRIPTION = 'This is a simple cloud storage web app that allows you to access your files any time any where with ease.';
 
 const LandingPage = () => (
-  <Jumbotron fluid className="wallpaper full-height">
+  <Jumbotron fluid className="wallpaper">
     <Container className="mt-5 pt-5 px-5">
       <h1>Welcome to MyDrive</h1>
       <h4 className="font-weight-light my-3 d-none d-md-block">{DESCRIPTION}</h4>
