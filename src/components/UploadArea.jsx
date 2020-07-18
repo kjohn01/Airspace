@@ -44,7 +44,7 @@ const UploadArea = ({
     handleClose();
   }, [handleClose, dispatch, uid]);
 
-  const className = data.fileList.length > 0 ? 'p-3 text-center' : 'd-flex flex-column justify-content-center text-center wallpaper px-4';
+  const className = data.fileList.length > 0 ? 'p-3 text-center' : 'd-flex flex-column justify-content-center text-center wallpaper full-height px-4';
 
   const intro = data.fileList.length > 0 ? 'Drag files here to upload' : 'Just drag files here for your first upload';
 

@@ -3,9 +3,9 @@
 import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Table, TableCell, TableContainer, TableHead, TableBody, TableRow, Paper,
+  Table, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
-import { Spinner } from 'react-bootstrap';
+import { MySpinner } from '../components/components';
 
 const Files = React.lazy(() => import('./Files'));
 
@@ -19,14 +19,7 @@ const FileList = ({ data }) => (
           <TableCell align="right" className="table-cell">Last Modified</TableCell>
         </TableRow>
       </TableHead>
-      <Suspense fallback={(
-        <TableBody className="fixed-center">
-          <Spinner animation="border" role="status" variant="secondary">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </TableBody>
-          )}
-      >
+      <Suspense fallback={<MySpinner />}>
         <Files data={data} />
       </Suspense>
     </Table>

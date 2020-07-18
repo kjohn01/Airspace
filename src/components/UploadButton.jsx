@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import uploadFiles from '../scripts/helper_functions';
 import AuthContext from '../scripts/Auth/AuthContext';
 
-const UploadInput = ({
+const UploadButton = ({
   data, dispatch, handleClose,
 }) => {
   const { uid } = useContext(AuthContext).authUser;
@@ -56,14 +56,14 @@ const UploadInput = ({
   );
 };
 
-UploadInput.propTypes = {
+UploadButton.propTypes = {
   data: PropTypes.object.isRequired,
   handleClose: PropTypes.func,
   dispatch: PropTypes.func.isRequired,
 };
 
-UploadInput.defaultProps = {
+UploadButton.defaultProps = {
   handleClose: () => {},
 };
 
-export default UploadInput;
+export default UploadButton;

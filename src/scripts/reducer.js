@@ -1,7 +1,7 @@
 import { uploadFile, deleteFile } from './database';
 
 const reducer = (state, action) => {
-  let { fileList } = state;
+  let { fileList } = state || [];
   let target; // for updating & deleting files
   switch (action.type) {
     case 'SET_DROP_DEPTH':

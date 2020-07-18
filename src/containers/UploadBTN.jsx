@@ -22,7 +22,7 @@ const UploadBTN = ({ data, dispatch }) => {
       </Button>
 
       <div className="d-flex d-md-none my-3">
-        <UploadButton dispatch={dispatch} handleClose={handleClose} />
+        <UploadButton data={data} dispatch={dispatch} handleClose={handleClose} />
       </div>
 
       <Modal show={show} onHide={handleClose}>

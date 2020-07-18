@@ -6,7 +6,7 @@ import { File } from '../components/components';
 
 const Files = ({ data }) => {
   // Implementing useMemo to cache file list to prevent redundant renders
-  const list = useMemo(() => data.fileList.map((f) => (
+  const list = useMemo(() => data.fileList && data.fileList.map((f) => (
     <File key={f.name} fileName={f.name} uploadDate={f.lastModified} size={f.size} type={f.type} />
   )), [data.fileList]);
 
