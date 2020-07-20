@@ -3,7 +3,7 @@
 import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import UploadButton from './UploadButton';
-import uploadFiles from '../scripts/helper_functions';
+import { uploadFiles } from '../scripts/helper_functions';
 import AuthContext from '../scripts/Auth/AuthContext';
 import '../styles/components.scss';
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
 const uploadFiles = (uid, dispatch, files) => {
   if (uid && dispatch && files && files.length > 0) {
@@ -14,4 +15,46 @@ const uploadFiles = (uid, dispatch, files) => {
   }
 };
 
-export default uploadFiles;
+const sortFiles = (sortBy, order, files) => {
+  let sortedFiles = [];
+  if (files && files.length > 0) {
+    sortedFiles = files.sort((a, b) => {
+      if (!a.hasOwnProperty(sortBy) || !b.hasOwnProperty(sortBy)) {
+        // property doesn't exist on either object
+        console.error(`Missing ${sortBy}`);
+        return 0;
+      }
+
+      let varA;
+      let varB;
+      switch (sortBy) {
+        case 'size':
+          varA = parseInt(a[sortBy], 10);
+          varB = parseInt(b[sortBy], 10);
+          break;
+        case 'lastModified':
+          varA = Date.parse(a[sortBy]);
+          varB = Date.parse(b[sortBy]);
+          break;
+        default:
+          // sort by name
+          varA = a[sortBy];
+          varB = b[sortBy];
+          break;
+      }
+
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return (
+        (order === 'desc') ? (comparison * -1) : comparison
+      );
+    });
+  }
+  return sortedFiles;
+};
+
+export { uploadFiles, sortFiles };

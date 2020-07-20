@@ -32,7 +32,7 @@ const Dashboard = ({ data, dispatch }) => {
       <Suspense fallback={<MySpinner />}>
         <Container className="mt-3">
           <div className="dropped-files">
-            <FileList data={data} />
+            <FileList data={data} dispatch={dispatch} />
           </div>
           <div className="d-flex fixed-bottom justify-content-end justify-content-md-between px-3 px-md-5">
             <UploadBTN data={data} dispatch={dispatch} />

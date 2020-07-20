@@ -13,7 +13,7 @@ const Dashboard = React.lazy(() => import('./containers/Dashboard'));
 
 const App = () => {
   const [data, dispatch] = useReducer(
-    reducer, { dropDepth: 0, inDropZone: false },
+    reducer, { dropDepth: 0, inDropZone: false, sortedBy: 'name', order: 'asc' },
   );
 
   const { authUser } = useContext(AuthContext);

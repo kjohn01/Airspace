@@ -3,7 +3,7 @@ import React, { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import AddIcon from '@material-ui/icons/Add';
-import uploadFiles from '../scripts/helper_functions';
+import { uploadFiles } from '../scripts/helper_functions';
 import AuthContext from '../scripts/Auth/AuthContext';
 
 const UploadButton = ({
