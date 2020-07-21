@@ -3,7 +3,7 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Table, TableCell, TableContainer, TableHead, TableRow, Paper, Button,
+  Table, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -24,7 +24,8 @@ const FileList = ({ data, dispatch }) => {
   const onSortedByChange = async (newSortedBy) => {
     if (sortedBy !== newSortedBy) {
       await setSortedBy(newSortedBy);
-      await setOrder('desc');
+      if (newSortedBy === 'name') await setOrder('asc');
+      else await setOrder('desc');
     } else if (order === 'desc') await setOrder('asc');
     else await setOrder('desc');
   };
@@ -35,30 +36,30 @@ const FileList = ({ data, dispatch }) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Button onClick={() => onSortedByChange('name')}>Name</Button>
+              <button onClick={() => onSortedByChange('name')}>Name</button>
               {
                 sortedBy === 'name'
                 && (order === 'desc'
-                  ? <Button onClick={() => setOrder('asc')}><ArrowUpwardIcon /></Button>
-                  : <Button onClick={() => setOrder('desc')}><ArrowDownwardIcon /></Button>)
+                  ? <button onClick={() => setOrder('asc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>
+                  : <button onClick={() => setOrder('desc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>)
               }
             </TableCell>
-            <TableCell align="right" className="table-cell">
-              <Button onClick={() => onSortedByChange('size')}>Size</Button>
+            <TableCell className="table-cell">
+              <button onClick={() => onSortedByChange('size')}>Size</button>
               {
                 sortedBy === 'size'
                 && (order === 'desc'
-                  ? <Button onClick={() => setOrder('asc')}><ArrowDownwardIcon /></Button>
-                  : <Button onClick={() => setOrder('desc')}><ArrowUpwardIcon /></Button>)
+                  ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
+                  : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
               }
             </TableCell>
             <TableCell align="right" className="table-cell">
-              <Button onClick={() => onSortedByChange('lastModified')}>Last Modified</Button>
+              <button onClick={() => onSortedByChange('lastModified')}>Last Modified</button>
               {
                 sortedBy === 'lastModified'
                 && (order === 'desc'
-                  ? <Button onClick={() => setOrder('asc')}><ArrowDownwardIcon /></Button>
-                  : <Button onClick={() => setOrder('desc')}><ArrowUpwardIcon /></Button>)
+                  ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
+                  : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
               }
             </TableCell>
           </TableRow>

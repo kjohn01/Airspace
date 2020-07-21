@@ -25,7 +25,7 @@ const UploadBTN = ({ data, dispatch }) => {
         <UploadButton data={data} dispatch={dispatch} handleClose={handleClose} />
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="d-none d-md-block">
         <Modal.Body className="pt-5">
           <UploadArea data={data} dispatch={dispatch} handleClose={handleClose} />
         </Modal.Body>
