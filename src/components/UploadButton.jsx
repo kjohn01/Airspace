@@ -1,9 +1,15 @@
-import React, { useRef } from 'react';
+/* eslint-disable react/forbid-prop-types */
+import React, { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import AddIcon from '@material-ui/icons/Add';
+import { uploadFiles } from '../scripts/helper_functions';
+import AuthContext from '../scripts/Auth/AuthContext';
 
-const UploadInput = ({ uploadFiles, handleClose }) => {
+const UploadButton = ({
+  data, dispatch, handleClose,
+}) => {
+  const { uid } = useContext(AuthContext).authUser;
   const inputEl = useRef(null);
   const onButtonClick = () => {
     // `current` points to the mounted text input element
@@ -13,16 +19,20 @@ const UploadInput = ({ uploadFiles, handleClose }) => {
   const handleSubmit = (e) => {
     const files = [];
     Object.keys(e.target.files).map((index) => files.push(e.target.files[index]));
-    uploadFiles(files);
+    uploadFiles(uid, dispatch, files);
     handleClose();
   };
+
+  const displayControlForSmallBTN = data && data.fileList.length > 0 ? 'd-flex d-md-none' : 'd-none';
+
+  const displayControlForBigBTN = data && data.fileList.length > 0 ? 'd-none d-md-flex' : 'mt-3';
 
   return (
     <>
       <Button
         size="lg"
-        variant="secondary"
-        className="mb-5 mx-auto d-none d-md-flex"
+        variant={data && data.fileList.length > 0 ? 'secondary' : 'danger'}
+        className={`mb-5 mx-auto ${displayControlForBigBTN}`}
         onClick={onButtonClick}
       >
         Choose files
@@ -30,7 +40,7 @@ const UploadInput = ({ uploadFiles, handleClose }) => {
       <Button
         size="lg"
         variant="danger"
-        className="d-flex d-md-none px-2 rounded-pill shadow"
+        className={`px-2 rounded-pill shadow ${displayControlForSmallBTN}`}
         onClick={onButtonClick}
       >
         <AddIcon fontSize="large" />
@@ -46,9 +56,14 @@ const UploadInput = ({ uploadFiles, handleClose }) => {
   );
 };
 
-UploadInput.propTypes = {
-  uploadFiles: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+UploadButton.propTypes = {
+  data: PropTypes.object.isRequired,
+  handleClose: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default UploadInput;
+UploadButton.defaultProps = {
+  handleClose: () => {},
+};
+
+export default UploadButton;

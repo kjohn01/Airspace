@@ -1,41 +1,80 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable max-len */
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Table, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
-import { Spinner } from 'react-bootstrap';
-// import Files from './Files';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { MySpinner } from '../components/components';
 
 const Files = React.lazy(() => import('./Files'));
 
-const FileList = ({ data }) => (
-  <TableContainer component={Paper} className="shadow-none">
-    <Table aria-label="simple table">
-      <TableHead>
-        <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell align="right" className="table-cell">size</TableCell>
-          <TableCell align="right" className="table-cell">Last Modified</TableCell>
-        </TableRow>
-      </TableHead>
-      <Suspense fallback={(
-        <div className="fixed-center">
-          <Spinner animation="border" role="status" variant="secondary">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </div>
-          )}
-      >
-        <Files data={data} />
-      </Suspense>
-    </Table>
-  </TableContainer>
-);
+const FileList = ({ data, dispatch }) => {
+  const [sortedBy, setSortedBy] = useState('name');
+  const [order, setOrder] = useState('asc');
+
+  useEffect(() => {
+    if (data && data.fileList && data.fileList.length > 0) {
+      dispatch({ type: 'SORT_FILES', sortedBy, order });
+    }
+  }, [sortedBy, order, dispatch]);
+
+  const onSortedByChange = async (newSortedBy) => {
+    if (sortedBy !== newSortedBy) {
+      await setSortedBy(newSortedBy);
+      if (newSortedBy === 'name') await setOrder('asc');
+      else await setOrder('desc');
+    } else if (order === 'desc') await setOrder('asc');
+    else await setOrder('desc');
+  };
+
+  return (
+    <TableContainer component={Paper} className="shadow-none">
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              <button onClick={() => onSortedByChange('name')}>Name</button>
+              {
+                sortedBy === 'name'
+                && (order === 'desc'
+                  ? <button onClick={() => setOrder('asc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>
+                  : <button onClick={() => setOrder('desc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>)
+              }
+            </TableCell>
+            <TableCell className="table-cell">
+              <button onClick={() => onSortedByChange('size')}>Size</button>
+              {
+                sortedBy === 'size'
+                && (order === 'desc'
+                  ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
+                  : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
+              }
+            </TableCell>
+            <TableCell align="right" className="table-cell">
+              <button onClick={() => onSortedByChange('lastModified')}>Last Modified</button>
+              {
+                sortedBy === 'lastModified'
+                && (order === 'desc'
+                  ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
+                  : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
+              }
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <Suspense fallback={<MySpinner />}>
+          <Files fileList={data.fileList} />
+        </Suspense>
+      </Table>
+    </TableContainer>
+  );
+};
 
 FileList.propTypes = {
   data: PropTypes.any.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default FileList;

@@ -1,7 +1,9 @@
+/* eslint-disable max-len */
 import { uploadFile, deleteFile } from './database';
+import { sortFiles } from './helper_functions';
 
 const reducer = (state, action) => {
-  let { fileList } = state;
+  let { fileList } = state || [];
   let target; // for updating & deleting files
   switch (action.type) {
     case 'SET_DROP_DEPTH':
@@ -42,6 +44,11 @@ const reducer = (state, action) => {
       // console.log(action.type);
       fileList = action.files.map((file) => file.data());
       return { ...state, fileList };
+    case 'SORT_FILES':
+      console.log(action.type);
+      return {
+        ...state, fileList: sortFiles(action.sortedBy, action.order, fileList), sortedBy: action.sortedBy, order: action.order,
+      };
     default:
       // console.log(action.type);
       return state;

@@ -29,7 +29,7 @@ const File = ({
         <h5>{fileName}</h5>
         <p>{`Modified at: ${lastModified}`}</p>
       </TableCell>
-      <TableCell align="right" className="table-cell">{filesize(size)}</TableCell>
+      <TableCell className="table-cell">{filesize(size)}</TableCell>
       <TableCell align="right" className="table-cell">{lastModified}</TableCell>
     </TableRow>
   );
