@@ -19,7 +19,7 @@ const FileList = ({ data, dispatch }) => {
     if (data && data.fileList && data.fileList.length > 0) {
       dispatch({ type: 'SORT_FILES', sortedBy, order });
     }
-  }, [sortedBy, order, dispatch]);
+  }, [data, sortedBy, order, dispatch]);
 
   const onSortedByChange = async (newSortedBy) => {
     if (sortedBy !== newSortedBy) {
