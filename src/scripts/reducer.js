@@ -29,13 +29,12 @@ const reducer = (state, action) => {
         }
       });
       return state;
-    case 'DELETE_FILES_FROM_CLOUD':
-      // console.log(action.type);
+    case 'DELETE_FILE_FROM_CLOUD':
       // Check if the file exist locally;
-      target = fileList.findIndex((f) => f.name === action.file);
+      target = fileList.findIndex((f) => f.name === action.fileName);
       if (target >= 0) {
         // Delete on cloud
-        deleteFile(action.uid, action.file);
+        deleteFile(action.uid, action.fileName);
         // Delete local
         fileList.splice(target, 1);
       } else console.error('File not exist!!');

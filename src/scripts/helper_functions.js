@@ -15,6 +15,15 @@ const uploadFiles = (uid, dispatch, files) => {
   }
 };
 
+const deleteFile = (uid, dispatch, fileName) => {
+  if (uid && dispatch && fileName) {
+    dispatch({ type: 'DELETE_FILE_FROM_CLOUD', fileName, uid });
+    console.log(`Deleted file: ${fileName}`);
+    dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
+    dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
+  }
+};
+
 const sortFiles = (sortBy, order, files) => {
   let sortedFiles = [];
   if (files && files.length > 0) {
@@ -57,4 +66,4 @@ const sortFiles = (sortBy, order, files) => {
   return sortedFiles;
 };
 
-export { uploadFiles, sortFiles };
+export { uploadFiles, deleteFile, sortFiles };

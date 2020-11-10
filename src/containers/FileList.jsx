@@ -7,8 +7,10 @@ import {
 } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { SwipeableList } from '@sandstreamdev/react-swipeable-list';
 import { MySpinner } from '../components/components';
 
+// eslint-disable-next-line
 const Files = React.lazy(() => import('./Files'));
 
 const FileList = ({ data, dispatch }) => {
@@ -19,7 +21,8 @@ const FileList = ({ data, dispatch }) => {
     if (data && data.fileList && data.fileList.length > 0) {
       dispatch({ type: 'SORT_FILES', sortedBy, order });
     }
-  }, [data, sortedBy, order, dispatch]);
+    // eslint-disable-next-line
+  }, [sortedBy, order, dispatch]);
 
   const onSortedByChange = async (newSortedBy) => {
     if (sortedBy !== newSortedBy) {
@@ -32,42 +35,44 @@ const FileList = ({ data, dispatch }) => {
 
   return (
     <TableContainer component={Paper} className="shadow-none">
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <button onClick={() => onSortedByChange('name')}>Name</button>
-              {
-                sortedBy === 'name'
-                && (order === 'desc'
-                  ? <button onClick={() => setOrder('asc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>
-                  : <button onClick={() => setOrder('desc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>)
-              }
-            </TableCell>
-            <TableCell className="table-cell">
-              <button onClick={() => onSortedByChange('size')}>Size</button>
-              {
-                sortedBy === 'size'
-                && (order === 'desc'
-                  ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
-                  : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
-              }
-            </TableCell>
-            <TableCell align="right" className="table-cell">
-              <button onClick={() => onSortedByChange('lastModified')}>Last Modified</button>
-              {
-                sortedBy === 'lastModified'
-                && (order === 'desc'
-                  ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
-                  : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
-              }
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <Suspense fallback={<MySpinner />}>
-          <Files fileList={data.fileList} />
-        </Suspense>
-      </Table>
+      <SwipeableList threshold={0.5}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <button onClick={() => onSortedByChange('name')}>Name</button>
+                {
+                  sortedBy === 'name'
+                  && (order === 'desc'
+                    ? <button onClick={() => setOrder('asc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>
+                    : <button onClick={() => setOrder('desc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>)
+                }
+              </TableCell>
+              <TableCell className="table-cell">
+                <button onClick={() => onSortedByChange('size')}>Size</button>
+                {
+                  sortedBy === 'size'
+                  && (order === 'desc'
+                    ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
+                    : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
+                }
+              </TableCell>
+              <TableCell align="right" className="table-cell">
+                <button onClick={() => onSortedByChange('lastModified')}>Last Modified</button>
+                {
+                  sortedBy === 'lastModified'
+                  && (order === 'desc'
+                    ? <button onClick={() => setOrder('asc')}><ArrowDownwardIcon fontSize="small" className="mx-1" /></button>
+                    : <button onClick={() => setOrder('desc')}><ArrowUpwardIcon fontSize="small" className="mx-1" /></button>)
+                }
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <Suspense fallback={<MySpinner />}>
+            <Files fileList={data.fileList} dispatch={dispatch} />
+          </Suspense>
+        </Table>
+      </SwipeableList>
     </TableContainer>
   );
 };

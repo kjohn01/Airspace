@@ -1,6 +1,7 @@
 // Specific styles for each components
 @import "./basic.scss";
 @import "./customBootstrap.scss";
+@import "../../node_modules/@sandstreamdev/react-swipeable-list/dist/styles.css";
 
 .file-exists {
     text-align: left;
@@ -9,6 +10,68 @@
 .inside-drag-area {
     opacity: 0.7;
 }
+
+
+.swipe-content {
+  background-color: red;
+  box-sizing: border-box;
+  color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+}
+
+.swipeable-list-item__content {
+  display: block;
+  padding: 16px;
+}
+
+.animations-swipeable-list__container {
+  width: 100%;
+  margin: 24px 0;
+  outline-color: gray;
+  outline-style: solid;
+  outline-width: 1px 0;
+}
+
+.animations__switcher {
+  align-self: auto;
+}
+
+.animations__switcher-row {
+  padding-top: 8px;
+}
+
+.file-exit {
+  opacity: 1;
+}
+
+.file-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: max-height 1000ms, opacity 1500ms;
+}
+
+.file-enter {
+  opacity: 0;
+  max-height: 0;
+}
+
+.file-enter-active {
+  opacity: 1;
+  max-height: 1000px;
+  transition: max-height 4000ms, opacity 1500ms;
+}
+
 
 .wallpaper {
     background-image: url("../resource/BG-desktop.jpg");
