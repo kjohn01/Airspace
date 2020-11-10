@@ -4,6 +4,7 @@ import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import AuthContext from '../scripts/Auth/AuthContext';
+import { deleteFile } from '../scripts/helper_functions';
 import '../styles/components.scss';
 
 const TrashBin = ({ data, dispatch }) => {
@@ -31,13 +32,8 @@ const TrashBin = ({ data, dispatch }) => {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.getData('text');
-    if (authUser && file) {
-      dispatch({ type: 'DELETE_FILES_FROM_CLOUD', file, uid: authUser.uid });
-      console.log(`Deleted file: ${file}`);
-      e.dataTransfer.clearData();
-      dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
-      dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
-    }
+    deleteFile(authUser.uid, dispatch, file);
+    e.dataTransfer.clearData();
   }, [dispatch, authUser]);
 
   const className = 'bg-secondary d-none d-md-block m-2 rounded-circle shadow text-center text-white';
