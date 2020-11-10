@@ -7,12 +7,17 @@ import { TableRow, TableCell } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { SwipeableListItem, ActionAnimations } from '@sandstreamdev/react-swipeable-list';
 import AuthContext from '../scripts/Auth/AuthContext';
-import { deleteFile } from '../scripts/helper_functions';
+import { deleteFile, downloadFile } from '../scripts/helper_functions';
 
 const File = ({
   fileName, uploadDate, size, dispatch,
 }) => {
-  const { authUser } = useContext(AuthContext);
+  const { uid } = useContext(AuthContext).authUser;
+
+  const handleClick = useCallback(() => {
+    downloadFile(uid, fileName);
+  }, [uid, fileName]);
+
   const handleDragStart = useCallback((e) => {
     e.dataTransfer.setData('text/plain', fileName);
     e.dataTransfer.effectAllowed = 'move';
@@ -24,8 +29,8 @@ const File = ({
   }, []);
 
   const handleSwipeLeft = useCallback(() => {
-    deleteFile(authUser.uid, dispatch, fileName);
-  }, [authUser, dispatch, fileName]);
+    deleteFile(uid, dispatch, fileName);
+  }, [uid, dispatch, fileName]);
 
   const lastModified = moment(uploadDate).fromNow();
 
@@ -37,7 +42,7 @@ const File = ({
   );
 
   return (
-    <TableRow key={fileName} draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <TableRow key={fileName} draggable onDragStart={handleDragStart} onDragEnd={handleDragEnd} onClick={handleClick}>
       <TableCell component="th" scope="row" className="table-cell">
         {fileName}
       </TableCell>

@@ -1,5 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
+import { downloadFile } from './database';
+
 const uploadFiles = (uid, dispatch, files) => {
   if (uid && dispatch && files && files.length > 0) {
     // Time stamp and check for existing files or updated version
@@ -66,4 +68,6 @@ const sortFiles = (sortBy, order, files) => {
   return sortedFiles;
 };
 
-export { uploadFiles, deleteFile, sortFiles };
+export {
+  uploadFiles, deleteFile, sortFiles, downloadFile,
+};
