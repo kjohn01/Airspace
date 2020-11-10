@@ -8,6 +8,7 @@
     "@sandstreamdev/react-swipeable-list": "github:sandstreamdev/react-swipeable-list",
     "bootstrap": "^4.5.3",
     "core-js": "^3.7.0",
+    "downloadjs": "^1.4.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint-plugin-flowtype": "^3.13.0",
