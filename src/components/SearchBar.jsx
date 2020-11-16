@@ -16,7 +16,7 @@ const SearchBar = ({ dispatch }) => {
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
         endAdornment={(
-          <UserControlMenu className="d-md-none" />
+          <UserControlMenu className="d-md-none py-2 pr-3" />
         )}
         classes={{
           root: 'w-100',

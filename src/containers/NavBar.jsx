@@ -18,7 +18,7 @@ const NavBar = ({ dispatch }) => {
             <>
               <div className="d-none d-md-flex">
                 <UserControlMenu />
-                <Typography variant="h6" className="p-2">
+                <Typography variant="h6" className="p-3">
                   Welcome
                   {' '}
                   {authUser.displayName}

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
-  IconButton, Menu, MenuItem,
+  IconButton, Menu, MenuItem, Avatar,
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { signOut } from '../scripts/Auth/auth';
+import AuthContext from '../scripts/Auth/AuthContext';
 
 const UserControlMenu = ({ className = '' }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const { authUser } = useContext(AuthContext);
 
   const handleMenu = async (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,7 +31,12 @@ const UserControlMenu = ({ className = '' }) => {
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircle />
+        <Avatar
+          src={authUser.photoURL}
+          alt={authUser.displayName}
+        >
+          <AccountCircle />
+        </Avatar>
       </IconButton>
       <Menu
         id="menu-appbar"

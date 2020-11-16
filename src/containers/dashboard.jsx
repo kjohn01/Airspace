@@ -7,8 +7,6 @@ import React, { useEffect, useContext, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Container } from 'react-bootstrap';
 import { TrashBin, UploadArea, MySpinner } from '../components/components';
-// import UploadBTN from './UploadBTN';
-// import FileList from './FileList';
 import AuthContext from '../scripts/Auth/AuthContext';
 import { listenForFiles, detachListener } from '../scripts/database';
 

@@ -11,7 +11,6 @@
     opacity: 0.7;
 }
 
-
 .swipe-content {
   background-color: red;
   box-sizing: border-box;
@@ -96,6 +95,10 @@ th {
     }
 }
 
+.MuiInputBase-input {
+  font-size: large !important;
+}
+
 @media (max-width: 767px) {
     .table-cell {
         display: none !important;
@@ -103,5 +106,14 @@ th {
 
     .wallpaper {
         background-image: url("../resource/BG-mobile.jpg");
+    }
+
+    .MuiAvatar-root {
+      width: 30px !important;
+      height: 30px !important;
+    }
+
+    .MuiInputBase-input {
+      font-size: larger !important;
     }
 }
