@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar dispatch={dispatch} />
       <div className="full-height">
         {
           // eslint-disable-next-line no-nested-ternary
