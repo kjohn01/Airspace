@@ -4,29 +4,38 @@ import PropTypes from 'prop-types';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import AuthContext from '../scripts/Auth/AuthContext';
 import { SignInWithGoogleBTN, SearchBar, UserControlMenu } from '../components/components';
+import HotBallonLogo from '../resource/Icons/HotAirBalloon';
 
 const NavBar = ({ dispatch }) => {
   const { authUser } = useContext(AuthContext);
 
-  const toolBarClasses = authUser ? 'd-flex justify-content-between' : 'd-flex justify-content-end';
-
   return (
     <AppBar position="static" className="bg-dark">
-      <Toolbar className={toolBarClasses}>
+      <Toolbar className="d-flex justify-content-between">
         {
-          !authUser ? <SignInWithGoogleBTN className="text-white" /> : (
+          !authUser ? (
             <>
-              <div className="d-none d-md-flex">
-                <UserControlMenu />
-                <Typography variant="h6" className="p-3">
-                  Welcome
-                  {' '}
-                  {authUser.displayName}
-                </Typography>
-              </div>
-              <SearchBar dispatch={dispatch} />
+              <HotBallonLogo
+                width="40"
+                height="40"
+                className="p-1"
+              />
+              <SignInWithGoogleBTN className="text-white" />
             </>
           )
+            : (
+              <>
+                <div className="d-none d-md-flex">
+                  <UserControlMenu />
+                  <Typography variant="h6" className="p-3">
+                    Welcome
+                    {' '}
+                    {authUser.displayName}
+                  </Typography>
+                </div>
+                <SearchBar dispatch={dispatch} />
+              </>
+            )
         }
       </Toolbar>
     </AppBar>
