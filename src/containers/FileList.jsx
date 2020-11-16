@@ -36,7 +36,7 @@ const FileList = ({ data, dispatch }) => {
   // handle file search with a simple array filter
   let { fileList, searchBy } = data;
   if (fileList && fileList.length > 0 && searchBy && searchBy.length > 0) {
-    fileList = fileList.filter((file) => file.name.includes(searchBy));
+    fileList = fileList.filter((file) => file.name.toLowerCase().includes(searchBy.toLowerCase()));
   }
 
   return (
