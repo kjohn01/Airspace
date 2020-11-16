@@ -8,7 +8,7 @@ const DESCRIPTION = 'This is a simple cloud storage web app that allows you to a
 const LandingPage = () => (
   <Jumbotron fluid className="wallpaper full-height">
     <Container className="mt-5 pt-5 px-5">
-      <h1>Welcome to MyDrive</h1>
+      <h1>Welcome to AirSpace</h1>
       <h4 className="font-weight-light my-3 d-none d-md-block">{DESCRIPTION}</h4>
       <h5 className="font-weight-light my-3 d-md-none">{DESCRIPTION}</h5>
       <div className="d-flex d-md-block justify-content-center mt-5">

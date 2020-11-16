@@ -32,6 +32,12 @@ const FileList = ({ data, dispatch }) => {
     } else if (order === 'desc') await setOrder('asc');
     else await setOrder('desc');
   };
+  
+  // handle file search with a simple array filter
+  let { fileList, searchBy } = data;
+  if (fileList && fileList.length > 0 && searchBy && searchBy.length > 0) {
+    fileList = fileList.filter((file) => file.name.toLowerCase().includes(searchBy.toLowerCase()));
+  }
 
   return (
     <TableContainer component={Paper} className="shadow-none">
@@ -69,7 +75,7 @@ const FileList = ({ data, dispatch }) => {
             </TableRow>
           </TableHead>
           <Suspense fallback={<MySpinner />}>
-            <Files fileList={data.fileList} dispatch={dispatch} />
+            <Files fileList={fileList} dispatch={dispatch} />
           </Suspense>
         </Table>
       </SwipeableList>
