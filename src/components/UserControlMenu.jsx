@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  IconButton, Typography, Menu, MenuItem,
+  IconButton, Menu, MenuItem,
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { signOut } from '../scripts/Auth/auth';
 
-const UserControlMenu = ({ userName }) => {
+const UserControlMenu = ({ className = '' }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -14,17 +14,18 @@ const UserControlMenu = ({ userName }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setAnchorEl(null);
   };
 
   return (
-    <div className="d-none d-md-flex">
+    <>
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
         aria-haspopup="true"
         edge="start"
+        className={className}
         onClick={handleMenu}
         color="inherit"
       >
@@ -47,17 +48,13 @@ const UserControlMenu = ({ userName }) => {
       >
         <MenuItem onClick={signOut}>Logout</MenuItem>
       </Menu>
-      <Typography variant="h6" className="p-2">
-        Welcome
-        {' '}
-        {userName}
-      </Typography>
-    </div>
+    </>
   );
 };
 
 UserControlMenu.propTypes = {
-  userName: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  className: PropTypes.string,
 };
 
 export default UserControlMenu;
