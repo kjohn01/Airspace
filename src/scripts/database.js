@@ -3,8 +3,7 @@
 import { storage, firestore, firebase } from './firebaseConfig';
 
 const download = require('downloadjs');
-const fs = require('fs');
-// firestore === db
+
 const storageRef = storage.ref();
 
 export const downloadFile = async (uid, fileName) => storageRef.child(`${uid}/${fileName}`).getDownloadURL().then((url) => fetch(url).then((res) => res.blob()).then((blob) => download(blob, fileName))).catch((error) => {
