@@ -8,11 +8,12 @@ const GlobalAuthState = (props) => {
   const [authUser, setAuthUser] = useState(undefined);
 
   useEffect(() => {
+    console.log('GlobalAuthState componentWillMount');
     listenForAuthUser((newAuthUser) => {
       setAuthUser(newAuthUser);
     });
     return () => {
-      // TODO: clear user presence on firestore
+      console.log('GlobalAuthState componentWillUnMount');
       setAuthUser(null);
     };
   }, []);

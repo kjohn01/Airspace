@@ -1,4 +1,5 @@
 import { auth, firebase } from '../firebaseConfig';
+import { clearOnlinePresence, detachListener } from '../database';
 
 // Auth with Google
 
@@ -14,37 +15,13 @@ export const signInWithGoogle = () => new Promise((resolve) => {
   resolve(auth.signInWithRedirect(provider));
 });
 
-// export const checkRedirectResult = () => auth.getRedirectResult().then((result) => {
-//   if (result.credential) {
-//   // This gives you a Google Access Token. You can use it to access the Google API.
-//     const token = result.credential.accessToken;
-//     console.log(`Signed in with token: ${token}`);
-//   // ...
-//   }
-//   // The signed-in user info.
-//   const { user } = result;
-//   return user;
-//   // TODO: Add user info to the firestore
-// }).catch((error) => {
-// // Handle Errors here.
-//   const errorCode = error.code;
-//   console.error(`Error Code: ${errorCode}`);
-//   const errorMessage = error.message;
-//   console.error(`Error Msg: ${errorMessage}`);
-//   // The email of the user's account used.
-//   const { email } = error;
-//   console.error(`email :${email}`);
-//   // The firebase.auth.AuthCredential type that was used.
-//   const { credential } = error;
-//   console.error(`credential: ${credential}`);
-// // ...
-// });
-
-export const signOut = () => {
+export const signOut = async () => {
   if (!auth.currentUser) console.error('Already signed out');
-  auth.signOut();
+  else {
+    const { uid } = auth.currentUser;
+    await clearOnlinePresence(uid).then(() => auth.signOut());
+  }
   return null;
-  // TODO: clear user presence on firestore
 };
 
 const getAuthUser = (user) => {

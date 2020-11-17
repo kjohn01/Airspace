@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Container } from 'react-bootstrap';
 import { TrashBin, UploadArea, MySpinner } from '../components/components';
 import AuthContext from '../scripts/Auth/AuthContext';
-import { listenForFiles, detachListener } from '../scripts/database';
+import { listenForFiles, detachListener, clearOnlinePresence, createOnlinePresence } from '../scripts/database';
 
 const FileList = React.lazy(() => import('./FileList'));
 const UploadBTN = React.lazy(() => import('./UploadBTN'));
@@ -17,9 +17,20 @@ const Dashboard = ({ data, dispatch }) => {
   const { authUser } = useContext(AuthContext);
 
   useEffect(() => {
-    if (authUser && authUser.uid) listenForFiles(authUser.uid, dispatch);
+    console.log("dashboard componentWillMount");
+    if (authUser && authUser.uid) {
+      const { uid, displayName } = authUser
+      createOnlinePresence(uid, displayName);
+      listenForFiles(uid, dispatch);
+    }
     return () => {
-      if (authUser && authUser.uid) detachListener(authUser.uid);
+      console.log("dashboard componentWillUnMount");
+      // console.log('authUser', authUser);
+      // if (authUser && authUser.uid) {
+      //   const { uid } = authUser;
+      //   clearOnlinePresence(uid);
+      //   detachListener(uid);
+      // }
     };
   }, [authUser, dispatch]);
 
