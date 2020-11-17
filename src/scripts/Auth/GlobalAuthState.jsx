@@ -12,7 +12,6 @@ const GlobalAuthState = (props) => {
       setAuthUser(newAuthUser);
     });
     return () => {
-      // TODO: clear user presence on firestore
       setAuthUser(null);
     };
   }, []);

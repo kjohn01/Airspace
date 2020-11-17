@@ -44,12 +44,12 @@ const reducer = (state, action) => {
       fileList = action.files.map((file) => file.data());
       return { ...state, fileList };
     case 'SORT_FILES':
-      console.log(action.type);
+      // console.log(action.type);
       return {
         ...state, fileList: sortFiles(action.sortedBy, action.order, fileList), sortedBy: action.sortedBy, order: action.order,
       };
     case 'SEARCH_FILES':
-      console.log(action.type);
+      // console.log(action.type);
       return {
         ...state, searchBy: action.searchBy,
       };

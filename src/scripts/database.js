@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
+import moment from 'moment';
 import { storage, firestore, firebase } from './firebaseConfig';
 
 const download = require('downloadjs');
@@ -78,8 +79,8 @@ export const deleteFile = async (uid, fileName) => firestore.collection('users')
   .catch((err) => console.error(err));
 
 export const listenForFiles = (uid, dispatch) => {
-  console.log('listening for files on firebase!');
   firestore.collection('users').doc(uid).collection('files').onSnapshot((docSnapshot) => {
+    console.log('listening for files on firebase!');
     dispatch({ type: 'ADD_FILE_TO_LIST', files: docSnapshot.docs });
   }, (err) => {
     console.log(`Encountered error: ${err}`);
@@ -87,7 +88,18 @@ export const listenForFiles = (uid, dispatch) => {
 };
 
 export const detachListener = (uid) => {
-  console.log('detached from firebase!');
-  firestore.collection('users').doc(uid).onSnapshot(() => {
+  firestore.collection('users').doc(uid).collection('files').onSnapshot(() => console.log('detached from firebase!'));
+};
+
+export const createOnlinePresence = async (uid, userName) => {
+  await firestore.collection('users').doc(uid).set({
+    isOnline: true,
+    lastLogIn: moment().format(),
+    name: userName,
   });
+};
+
+export const clearOnlinePresence = async (uid) => {
+  await firestore.collection('users').doc(uid).update({ isOnline: false })
+    .then(() => detachListener(uid));
 };
