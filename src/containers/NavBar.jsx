@@ -20,7 +20,9 @@ const NavBar = ({ dispatch }) => {
                 height="40"
                 className="p-1"
               />
-              <SignInWithGoogleBTN className="text-white" />
+              {
+                authUser !== undefined && <SignInWithGoogleBTN className="text-white" />
+              }
             </>
           )
             : (
