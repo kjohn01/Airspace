@@ -1,5 +1,5 @@
 import { auth, firebase } from '../firebaseConfig';
-import { clearOnlinePresence, detachListener } from '../database';
+import { clearOnlinePresence } from '../database';
 
 // Auth with Google
 

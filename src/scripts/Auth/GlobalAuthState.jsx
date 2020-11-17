@@ -8,12 +8,10 @@ const GlobalAuthState = (props) => {
   const [authUser, setAuthUser] = useState(undefined);
 
   useEffect(() => {
-    console.log('GlobalAuthState componentWillMount');
     listenForAuthUser((newAuthUser) => {
       setAuthUser(newAuthUser);
     });
     return () => {
-      console.log('GlobalAuthState componentWillUnMount');
       setAuthUser(null);
     };
   }, []);

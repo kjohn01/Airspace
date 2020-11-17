@@ -100,5 +100,6 @@ export const createOnlinePresence = async (uid, userName) => {
 };
 
 export const clearOnlinePresence = async (uid) => {
-  await firestore.collection('users').doc(uid).update({ isOnline: false }).then(() => detachListener(uid));
+  await firestore.collection('users').doc(uid).update({ isOnline: false })
+    .then(() => detachListener(uid));
 };
